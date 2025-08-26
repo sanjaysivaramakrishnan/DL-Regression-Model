@@ -64,6 +64,24 @@ print(f'Initial Weight: {initial_weight:.8f}, Initial Bias: {initial_bias:.8f}\n
 # Define Loss Function & Optimizer
 loss_function = nn.MSELoss()
 optimizer = torch.optim.SGD(model.parameters(),lr=0.001)
+# Train the Model
+epochs = 50
+losses = []
+for epoch in range(1, epochs + 1):  # Loop over epochs
+    y_pred = model(X)
+    loss = loss_function(y_pred,y)
+    losses.append(loss.item())
+
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    if epoch % 100 == 0:
+      print(f'epoch: {epoch:2}  loss: {loss.item():10.8f}  '
+          f'weight: {model.linear.weight.item():10.8f}  '
+          f'bias: {model.linear.bias.item():10.8f}')
+
+
 ```
 
 ### Dataset Information
